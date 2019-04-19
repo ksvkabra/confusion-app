@@ -45,7 +45,7 @@ class About extends Component {
         }
         const { navigate } = this.props.navigation;
 
-        if(this.props.leader.isLoading){
+        if(this.props.leaders.isLoading){
             return(
                 <ScrollView>
                     <History />
@@ -56,11 +56,12 @@ class About extends Component {
                 </ScrollView>
             );
         }
+             
 
         else if(this.props.leaders.errMess) {
             return(
                 <ScrollView>
-                    <Animatable.View animation='fadeInDown' duration={2000}>
+                    <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
                         <History />
                         <Card
                             title='Corporate Leadership'>
