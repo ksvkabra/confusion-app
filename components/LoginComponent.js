@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { Button, Icon, Input, CheckBox } from 'react-native-elements';
-import { SecureStore, Permissions, ImagePicker } from 'expo';
+import { SecureStore, Permissions, ImagePicker, ImageManipulator } from 'expo';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -135,6 +135,17 @@ class RegisterTab extends Component {
         )
     };
 
+    processImage = async (imageUri) => {
+        let processedImage = await ImageManipulator.manipulate(
+            imageUri,
+            [
+                { resize: { width: 400}}
+            ],
+            { format: 'png'}
+        );
+        this.setState({ imageUrl: processedImage.uri });
+    }
+
     getImageFromCamera = async () => {
         const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
         const cameraRoll = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -146,7 +157,7 @@ class RegisterTab extends Component {
             });
 
             if(!capturedImage.cancelled) {
-                this.setState({ imageUrl: capturedImage.uri})
+                this.processImage(capturedImage.uri);
             }
         }
     }
