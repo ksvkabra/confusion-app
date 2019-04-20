@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { Button, Icon, Input, CheckBox } from 'react-native-elements';
-import { SecureStore, Permissions, ImagePicker, ImageManipulator } from 'expo';
+import { SecureStore, Camera, Permissions, ImagePicker, Asset, ImageManipulator } from 'expo';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -136,14 +136,16 @@ class RegisterTab extends Component {
     };
 
     processImage = async (imageUri) => {
-        let processedImage = await ImageManipulator.manipulate(
-            imageUri,
+        let processedImage = await ImageManipulator.manipulateAsync(
+            imageUri, 
             [
-                { resize: { width: 400}}
+                {resize: {width: 400}}
             ],
-            { format: 'png'}
+            {format: 'png'}
         );
-        this.setState({ imageUrl: processedImage.uri });
+        console.log(processedImage);
+        this.setState({imageUrl: processedImage.uri });
+
     }
 
     getImageFromCamera = async () => {
