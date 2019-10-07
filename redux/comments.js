@@ -6,6 +6,8 @@ export const comments = (state = {
     comments: []
 }, action) => {
     switch(action.type) {
+        case ActionTypes.INVALID_ACTION:
+            return{...state, errMess: action.payload, comments: action.payload};
         case ActionTypes.ADD_COMMENTS:
             return{...state, errMess: null, comments: action.payload};
 
